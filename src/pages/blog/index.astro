@@ -1,0 +1,101 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = posts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout
+  title="Blog | INVESThOuR"
+  description="Practical articles about personal finance, investing, mutual funds, IPOs and smarter money decisions."
+>
+  <section class="page-header">
+    <div class="container">
+      <p class="eyebrow">INVESThOuR BLOG</p>
+      <h1>Money, explained beyond the video.</h1>
+      <p>
+        Practical articles based on our research, videos and real-world
+        financial questions.
+      </p>
+    </div>
+  </section>
+
+  <section class="blog-section">
+    <div class="container">
+      <div class="blog-grid">
+        {sortedPosts.map((post) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            date={post.data.date.toLocaleDateString("en-IN", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+            category={post.data.category}
+            href={`/blog/${post.id}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header {
+    padding: 80px 0 60px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .page-header h1 {
+    max-width: 800px;
+    margin: 12px 0;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .page-header p:last-child {
+    max-width: 650px;
+    margin: 0;
+    color: #6b7280;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #6b7280;
+  }
+
+  .blog-section {
+    padding: 60px 0 100px;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,186 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { videos } from "../../data/videos.js";
+
+export function getStaticPaths() {
+  return videos.map((video) => ({
+    params: { slug: video.slug },
+    props: { video },
+  }));
+}
+
+const { video } = Astro.props;
+---
+
+<Layout
+  title={`${video.title} | INVESThOuR`}
+  description={video.description}
+>
+  <article class="video-page">
+    <div class="container">
+
+      <div class="breadcrumbs">
+        <a href="/">Home</a>
+        <span>→</span>
+        <a href="/videos">Videos</a>
+        <span>→</span>
+        <span>{video.category}</span>
+      </div>
+
+      <header class="video-header">
+        <p class="category">{video.category}</p>
+
+        <h1>{video.title}</h1>
+
+        <p class="description">
+          {video.description}
+        </p>
+
+        <time>{video.date}</time>
+      </header>
+
+      <div class="video-wrapper">
+        <iframe
+          src={`https://www.youtube.com/embed/${video.youtubeId}`}
+          title={video.title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <section class="content">
+        <h2>About this video</h2>
+
+        <p>
+          This video breaks down the topic in a simple and practical way,
+          helping you understand the numbers and make better financial
+          decisions.
+        </p>
+
+        <div class="youtube-cta">
+          <h3>Watch more from INVESThOuR</h3>
+
+          <p>
+            Subscribe on YouTube for more videos about money, investing
+            and smarter financial decisions.
+          </p>
+
+          <a
+            href="https://www.youtube.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit YouTube Channel →
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .video-page {
+    padding: 50px 0 100px;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    color: #6b7280;
+    font-size: 0.9rem;
+  }
+
+  .breadcrumbs a {
+    color: #374151;
+    text-decoration: none;
+  }
+
+  .video-header {
+    max-width: 900px;
+    margin-bottom: 40px;
+  }
+
+  .category {
+    margin: 0 0 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #6b7280;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0 0 20px;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .description {
+    max-width: 750px;
+    color: #6b7280;
+    font-size: 1.15rem;
+    line-height: 1.7;
+  }
+
+  time {
+    display: block;
+    margin-top: 20px;
+    color: #9ca3af;
+    font-size: 0.9rem;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 60px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #111827;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .content {
+    max-width: 800px;
+  }
+
+  .content h2 {
+    margin-bottom: 12px;
+    font-size: 2rem;
+  }
+
+  .content p {
+    color: #4b5563;
+    line-height: 1.8;
+  }
+
+  .youtube-cta {
+    margin-top: 50px;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    background: #f8fafc;
+  }
+
+  .youtube-cta h3 {
+    margin-top: 0;
+  }
+
+  .youtube-cta a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #111827;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

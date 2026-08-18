@@ -1,0 +1,233 @@
+---
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="INVESThOuR home">
+      INVEST<span>hOuR</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/videos">Videos</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+
+    <div class="header-actions">
+      <a
+        href="https://www.youtube.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="youtube-button"
+      >
+        YouTube
+      </a>
+
+      <button
+        class="menu-button"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <nav aria-label="Mobile navigation">
+      <a href="/">Home</a>
+      <a href="/videos">Videos</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+
+    <a
+      href="https://www.youtube.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mobile-youtube"
+    >
+      Watch on YouTube →
+    </a>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.querySelector(".menu-button");
+  const mobileMenu = document.querySelector(".mobile-menu");
+
+  menuButton?.addEventListener("click", () => {
+    const isOpen = mobileMenu?.classList.toggle("open");
+
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+
+    menuButton.classList.toggle("active", Boolean(isOpen));
+  });
+
+  document.querySelectorAll(".mobile-menu a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.remove("open");
+      menuButton?.classList.remove("active");
+      menuButton?.setAttribute("aria-expanded", "false");
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #e5e7eb;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 72px;
+    gap: 30px;
+  }
+
+  .logo {
+    color: #111827;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .logo span {
+    font-weight: 500;
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-left: auto;
+  }
+
+  .desktop-nav a {
+    color: #4b5563;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .desktop-nav a:hover {
+    color: #111827;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .youtube-button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #111827;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .youtube-button:hover {
+    background: #000;
+    transform: translateY(-1px);
+  }
+
+  .menu-button {
+    display: none;
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+  }
+
+  .menu-button span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin: 5px 0;
+    background: #111827;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .menu-button.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-button.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-button.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    display: none;
+    border-top: 1px solid #e5e7eb;
+    background: white;
+  }
+
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu nav a {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #111827;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .mobile-youtube {
+    display: block;
+    margin: 16px 20px 20px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    background: #111827;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .mobile-menu.open {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .desktop-nav,
+    .youtube-button {
+      display: none;
+    }
+
+    .menu-button {
+      display: block;
+    }
+  }
+</style>

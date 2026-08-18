@@ -1,0 +1,101 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Page Not Found | INVESThOuR"
+  description="The page you're looking for could not be found."
+>
+  <section class="not-found">
+    <div class="container">
+      <p class="error-code">404</p>
+
+      <h1>Looks like this page got lost.</h1>
+
+      <p class="description">
+        The page you're looking for doesn't exist, may have moved,
+        or the URL might be incorrect.
+      </p>
+
+      <div class="actions">
+        <a href="/" class="primary-button">Back to Home</a>
+        <a href="/blog" class="secondary-button">Read the Blog</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: calc(100vh - 250px);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .not-found .container {
+    max-width: 700px;
+  }
+
+  .error-code {
+    margin: 0;
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.08em;
+    color: #e5e7eb;
+  }
+
+  h1 {
+    margin: 30px 0 15px;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+  }
+
+  .description {
+    max-width: 550px;
+    margin: 0 auto;
+    color: #6b7280;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 13px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .primary-button {
+    background: #111827;
+    color: white;
+  }
+
+  .secondary-button {
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #111827;
+  }
+
+  @media (max-width: 640px) {
+    .actions {
+      flex-direction: column;
+    }
+
+    .primary-button,
+    .secondary-button {
+      text-align: center;
+    }
+  }
+</style>
