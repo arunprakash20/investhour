@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://investhour.pages.dev',
+  site: 'https://investhour.in',
   integrations: [sitemap()],
 });
