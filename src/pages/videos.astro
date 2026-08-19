@@ -1,188 +1,653 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { videos } from "../data/videos.js";
-import VideoCard from "../components/VideoCard.astro";
+
+const sortedVideos = [...videos].sort(
+  (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
+);
+
+const featuredVideo = sortedVideos[0];
+const remainingVideos = sortedVideos.slice(1);
+
+const categories = [
+  "All",
+  "Personal Finance",
+  "Investing",
+  "Money Mistakes",
+  "Stocks",
+  "Mutual Funds",
+  "IPOs",
+];
 ---
 
 <Layout
   title="Videos | INVESThOuR"
-  description="Watch INVESThOuR videos about personal finance, investing, mutual funds and smarter money decisions."
+  description="Practical videos about personal finance, investing and smarter money decisions."
 >
-  <section class="page-header">
-    <div class="container">
-      <p class="eyebrow">INVESThOuR VIDEOS</p>
-      <h1>Money. Investing. Explained.</h1>
-      <p>
-        Practical videos about personal finance, investing and financial
-        decisions — without unnecessary jargon.
-      </p>
-    </div>
-  </section>
+  <main>
+    <section class="videos-hero">
+      <div class="container">
+        <p class="eyebrow">INVESThOuR VIDEOS</p>
 
-  <section class="videos-section">
-    <div class="container">
-    <div class="filters" aria-label="Filter videos">
-        <button
-            type="button"
-            class="active"
-            data-filter="All"
-        >
-            All
-        </button>
+        <h1>
+          Money.
+          <span>Explained.</span>
+        </h1>
 
-        <button
-            type="button"
-            data-filter="Personal Finance"
-        >
-            Personal Finance
-        </button>
-
-        <button
-            type="button"
-            data-filter="Investing"
-        >
-            Investing
-        </button>
-
-        <button
-            type="button"
-            data-filter="Mutual Funds"
-        >
-            Mutual Funds
-        </button>
-
-        <button
-            type="button"
-            data-filter="IPO"
-        >
-            IPO
-        </button>
-    </div>
-
-      <div class="video-grid">
-        {videos.map((video) => (
-          <VideoCard {...video} />
-        ))}
+        <p class="hero-copy">
+          Visual breakdowns of personal finance, investing and the
+          money decisions that actually matter.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="filter-section">
+      <div class="container">
+        <div class="filters" aria-label="Video categories">
+          {
+            categories.map((category) => (
+              <button
+                type="button"
+                class:list={[
+                  "filter",
+                  category === "All" && "active",
+                ]}
+                data-filter={category}
+              >
+                {category}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {
+      featuredVideo && (
+        <section class="featured-section">
+          <div class="container">
+            <a
+              href={`/videos/${featuredVideo.slug}`}
+              class="featured-video"
+              data-category={featuredVideo.category}
+            >
+              <div class="featured-image">
+                <img
+                  src={featuredVideo.thumbnail}
+                  alt={featuredVideo.title}
+                />
+
+                <span class="play">▶</span>
+
+                <span class="featured-label">
+                  FEATURED
+                </span>
+              </div>
+
+              <div class="featured-content">
+                <p class="meta">
+                  {featuredVideo.category} · {featuredVideo.date}
+                </p>
+
+                <h2>{featuredVideo.title}</h2>
+
+                <p>{featuredVideo.description}</p>
+
+                <span class="watch">
+                  Watch breakdown →
+                </span>
+              </div>
+            </a>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="latest-section">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">LATEST</p>
+            <h2>Keep learning.</h2>
+          </div>
+
+          <span class="count">
+            {sortedVideos.length} videos
+          </span>
+        </div>
+
+        <div class="video-list">
+
+          {
+            remainingVideos.map((video, index) => (
+              <a
+                href={`/videos/${video.slug}`}
+                class="video-row"
+                data-category={video.category}
+              >
+                <span class="number">
+                  {String(index + 2).padStart(2, "0")}
+                </span>
+
+                <div class="thumbnail">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    loading="lazy"
+                  />
+
+                  <span class="mini-play">▶</span>
+                </div>
+
+                <div class="video-info">
+                  <p class="meta">
+                    {video.category} · {video.date}
+                  </p>
+
+                  <h3>{video.title}</h3>
+
+                  <p>{video.description}</p>
+                </div>
+
+                <span class="arrow">→</span>
+              </a>
+            ))
+          }
+
+        </div>
+      </div>
+    </section>
+
+    <section class="video-cta">
+      <div class="container">
+        <div class="cta-inner">
+          <div>
+            <p class="eyebrow">MORE ON YOUTUBE</p>
+
+            <h2>
+              Finance doesn't have to
+              <span>feel complicated.</span>
+            </h2>
+          </div>
+
+          <a
+            href="https://www.youtube.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="youtube-button"
+          >
+            <span>▶</span>
+            Watch on YouTube
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
 
+<script>
+  function initialiseFilters() {
+    const filters =
+      document.querySelectorAll<HTMLButtonElement>(
+        "[data-filter]"
+      );
+
+    const items =
+      document.querySelectorAll<HTMLElement>(
+        "[data-category]"
+      );
+
+    if (!filters.length) return;
+
+    filters.forEach((filter) => {
+      if (filter.dataset.bound === "true") return;
+
+      filter.dataset.bound = "true";
+
+      filter.addEventListener("click", () => {
+        const category =
+          filter.dataset.filter ?? "All";
+
+        filters.forEach((item) => {
+          item.classList.toggle(
+            "active",
+            item === filter
+          );
+        });
+
+        items.forEach((item) => {
+          const itemCategory =
+            item.dataset.category ?? "";
+
+          const visible =
+            category === "All" ||
+            itemCategory === category;
+
+          item.classList.toggle(
+            "hidden",
+            !visible
+          );
+        });
+      });
+    });
+  }
+
+  document.addEventListener(
+    "astro:page-load",
+    initialiseFilters
+  );
+
+  initialiseFilters();
+</script>
+
 <style>
-  .page-header {
-    padding: 80px 0 60px;
-    background: var(--surface-soft);
-    border-bottom: 1px solid #e5e7eb;
+  .videos-hero {
+    padding: 92px 0 70px;
+    border-bottom: 1px solid var(--border);
   }
 
-  .page-header h1 {
+  .videos-hero h1 {
     max-width: 800px;
-    margin: 12px 0;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: -0.04em;
+    margin: 15px 0 20px;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: var(--text);
   }
 
-  .page-header p:last-child {
-    max-width: 650px;
+  .videos-hero h1 span {
+    color: var(--brand);
+  }
+
+  .hero-copy {
+    max-width: 700px;
     margin: 0;
     color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.7;
+    font-size: 1.12rem;
+    line-height: 1.75;
+  }
+
+  .eyebrow,
+  .meta,
+  .count {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
   }
 
   .eyebrow {
     margin: 0;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--text-secondary);
+    color: var(--brand);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
   }
 
-  .videos-section {
-    padding: 60px 0 100px;
+  .filter-section {
+    position: sticky;
+    top: 82px;
+    z-index: 20;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    background: color-mix(
+      in srgb,
+      var(--bg) 92%,
+      transparent
+    );
+    backdrop-filter: blur(16px);
   }
 
   .filters {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
+    gap: 9px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 
-  .filters button {
-    border: 1px solid #d1d5db;
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+    padding: 9px 14px;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 9px 16px;
     background: var(--surface);
     color: var(--text-secondary);
     cursor: pointer;
-    font: inherit;
+    font-size: 0.84rem;
+    transition:
+      background 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
   }
 
-  .filters button.active {
+  .filter:hover {
+    transform: translateY(-1px);
+    border-color: var(--brand);
+    color: var(--text);
+  }
+
+  .filter.active {
+    border-color: var(--brand);
     background: var(--brand);
     color: #07100d;
-    border-color: var(--brand);
   }
 
-  .video-grid {
+  .featured-section {
+    padding: 72px 0 45px;
+  }
+
+  .featured-video {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    grid-template-columns: 1.25fr 0.75fr;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    text-decoration: none;
+  }
+
+  .featured-image {
+    position: relative;
+    min-height: 430px;
+    overflow: hidden;
+    background: var(--surface-soft);
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 500ms ease;
+  }
+
+  .featured-video:hover .featured-image img {
+    transform: scale(1.035);
+  }
+
+  .play {
+    position: absolute;
+    left: 28px;
+    bottom: 28px;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #07100d;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+  }
+
+  .featured-label {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .featured-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 44px;
+  }
+
+  .meta {
+    margin: 0 0 10px;
+    color: var(--brand);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .featured-content h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    color: var(--text);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .featured-content > p:not(.meta) {
+    margin: 18px 0 24px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .watch {
+    width: fit-content;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .latest-section {
+    padding: 75px 0 110px;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+
+  .section-heading h2 {
+    margin: 9px 0 0;
+    font-family: var(--font-display);
+    color: var(--text);
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+
+  .count {
+    color: var(--text-muted);
+    font-size: 0.66rem;
+    letter-spacing: 0.05em;
+  }
+
+  .video-list {
+    border-top: 1px solid var(--border);
+  }
+
+  .video-row {
+    display: grid;
+    grid-template-columns: 40px 220px 1fr 24px;
+    gap: 22px;
+    align-items: center;
+    padding: 23px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition:
+      padding 180ms ease,
+      background 180ms ease;
+  }
+
+  .video-row:hover {
+    padding-inline: 10px;
+    background: var(--surface);
+  }
+
+  .number {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .thumbnail {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 11px;
+    background: var(--surface-soft);
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .mini-play {
+    position: absolute;
+    right: 9px;
+    bottom: 9px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.68rem;
+  }
+
+  .video-info h3 {
+    margin: 0 0 8px;
+    color: var(--text);
+    font-size: 1.35rem;
+    line-height: 1.15;
+  }
+
+  .video-info > p:not(.meta) {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .arrow {
+    color: var(--text-muted);
+    transition:
+      transform 180ms ease,
+      color 180ms ease;
+  }
+
+  .video-row:hover .arrow {
+    color: var(--brand);
+    transform: translateX(4px);
+  }
+
+  .video-row.hidden,
+  .featured-video.hidden {
+    display: none;
+  }
+
+  .video-cta {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 85px 0;
+  }
+
+  .cta-inner h2 {
+    max-width: 720px;
+    margin: 10px 0 0;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(2.7rem, 5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+
+  .cta-inner h2 span {
+    color: var(--brand);
+  }
+
+  .youtube-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    flex: 0 0 auto;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #ff0000;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
   }
 
   @media (max-width: 900px) {
-    .video-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 640px) {
-    .video-grid {
+    .featured-video {
       grid-template-columns: 1fr;
     }
 
-    .page-header {
-      padding: 60px 0 45px;
+    .featured-image {
+      min-height: 320px;
+    }
+
+    .video-row {
+      grid-template-columns: 32px 170px 1fr 20px;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .videos-hero {
+      padding: 55px 0 48px;
+    }
+
+    .videos-hero h1 {
+      font-size: clamp(3.2rem, 15vw, 5rem);
+    }
+
+    .featured-section {
+      padding-top: 45px;
+    }
+
+    .featured-content {
+      padding: 27px;
+    }
+
+    .video-row {
+      grid-template-columns: 32px 1fr 18px;
+    }
+
+    .video-row .thumbnail {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .video-row .video-info {
+      grid-column: 2 / -1;
+      grid-row: 2;
+    }
+
+    .video-row .arrow {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .cta-inner {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .youtube-button {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
-
-<script>
-  const filterButtons =
-    document.querySelectorAll<HTMLButtonElement>(
-      "[data-filter]"
-    );
-
-  const videoCards =
-    document.querySelectorAll<HTMLElement>(
-      ".video-card"
-    );
-
-  filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const selectedFilter =
-        button.dataset.filter ?? "All";
-
-      filterButtons.forEach((item) => {
-        item.classList.toggle(
-          "active",
-          item === button
-        );
-      });
-
-      videoCards.forEach((card) => {
-        const category =
-          card.dataset.category ?? "";
-
-        const shouldShow =
-          selectedFilter === "All" ||
-          category === selectedFilter;
-
-        card.style.display =
-          shouldShow ? "" : "none";
-      });
-    });
-  });
-</script>

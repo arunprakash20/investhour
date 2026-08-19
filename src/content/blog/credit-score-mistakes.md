@@ -9,35 +9,78 @@ thumbnail: "/images/credit-score.webp"
 
 # The Credit Score Mistake Almost Everyone Makes
 
-Closing an old credit card might seem like the responsible thing to do.
+Closing an old credit card might feel like the financially responsible thing to do.
 
-But depending on your credit profile, closing a card you rarely use can have an unexpected effect on your credit profile.
+But there is an important question people often miss:
 
-## Why closing an old credit card can matter
+**What happens to the rest of your credit profile when that card disappears?**
 
-One important factor in your credit profile is credit utilisation.
+## Why closing an old card can matter
 
-When you close a credit card, you may reduce the total amount of credit available to you.
+Your credit profile is influenced by several factors, and one of the important ones is **credit utilisation**.
 
-For example, imagine you have:
+Imagine you have:
 
-- Credit Card A: ₹1,00,000 limit
-- Credit Card B: ₹1,00,000 limit
+- Card A — ₹1,00,000 limit
+- Card B — ₹1,00,000 limit
 
 Your total available credit is ₹2,00,000.
 
-If you close Card B, your available credit can fall to ₹1,00,000.
+If you have ₹20,000 of outstanding balances, your utilisation is:
 
-That can change your utilisation ratio even if your spending hasn't changed.
+**₹20,000 ÷ ₹2,00,000 = 10%**
 
-## What should you do instead?
+Now suppose you close Card B.
 
-Don't automatically close an old card simply because you don't use it.
+Your available credit becomes ₹1,00,000.
 
-Consider factors such as:
+The same ₹20,000 balance now represents:
 
-- Annual fees
-- Credit limit
-- How long you've held the card
-- Your overall credit utilisation
+**₹20,000 ÷ ₹1,00,000 = 20%**
+
+You didn't spend another rupee.
+
+But the ratio changed.
+
+## Does closing a credit card automatically hurt your score?
+
+No.
+
+That's an important distinction.
+
+Closing an old card is not automatically a bad decision. The impact depends on the overall credit profile, utilisation, age and other factors.
+
+The point is to understand the consequences **before** you close the account.
+
+## What should you consider?
+
+Before closing an old credit card, look at:
+
+- Its annual fee
+- Your total available credit
+- Your current utilisation
+- How long you've held the account
 - Whether the card provides useful benefits
+- Whether you have other active credit accounts
+
+## The better question
+
+Instead of asking:
+
+> "Do I use this card?"
+
+also ask:
+
+> "What changes in my overall credit profile if I close it?"
+
+That second question is where many people miss the bigger picture.
+
+## Watch the full breakdown
+
+The video goes deeper into the mechanics and the other factors that can influence your credit profile.
+
+## Final thought
+
+Financial decisions often look simple when you consider only one variable.
+
+The better approach is to understand the **trade-offs** before acting.

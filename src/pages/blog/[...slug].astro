@@ -25,100 +25,159 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
   title={`${post.data.title} | INVESThOuR`}
   description={post.data.description}
 >
-  <article class="article-page">
-    <div class="container">
+  <main class="article-page">
 
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a>
-        <span>/</span>
-        <a href="/blog">Blog</a>
-        <span>/</span>
-        <span>{post.data.category}</span>
-      </nav>
+    <section class="article-hero">
+      <div class="container">
 
-      <header class="article-header">
-        <div class="category">{post.data.category}</div>
-
-        <h1>{post.data.title}</h1>
-
-        <p class="description">
-          {post.data.description}
-        </p>
-
-        <div class="meta">
-          <span>Published {publishedDate}</span>
-          <span>•</span>
-          <span>INVESThOuR</span>
+        <div class="breadcrumbs">
+          <a href="/">Home</a>
+          <span>/</span>
+          <a href="/blog">Articles</a>
+          <span>/</span>
+          <span>{post.data.category}</span>
         </div>
-      </header>
 
-      {
-        post.data.thumbnail && (
-          <figure class="featured-image">
-            <img
-              src={post.data.thumbnail}
-              alt={post.data.title}
-              loading="eager"
-            />
-          </figure>
-        )
-      }
+        <div class="hero-grid">
 
-      {
-        post.data.youtubeId && (
-          <section class="watch-card" id="watch-video">
-            <div>
-              <p class="eyebrow">WATCH THE VIDEO</p>
-              <h2>Prefer watching this breakdown?</h2>
-              <p>
-                Watch the complete INVESThOuR video for the visual
-                explanation and examples.
-              </p>
+          <div class="hero-copy">
+            <div class="category">
+              {post.data.category}
             </div>
 
-            <div class="video-wrapper">
-              <iframe
-                src={`https://www.youtube.com/embed/${post.data.youtubeId}`}
-                title={post.data.title}
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+            <h1>{post.data.title}</h1>
+
+            <p class="description">
+              {post.data.description}
+            </p>
+
+            <div class="meta-line">
+              <span>{publishedDate}</span>
+              <span>•</span>
+              <span>INVESThOuR</span>
             </div>
-          </section>
-        )
-      }
+          </div>
 
-      <div class="article-layout">
+          {
+            post.data.thumbnail && (
+              <figure class="hero-image">
+                <img
+                  src={post.data.thumbnail}
+                  alt={post.data.title}
+                  loading="eager"
+                />
+              </figure>
+            )
+          }
 
-        <aside class="article-sidebar">
+        </div>
+      </div>
+    </section>
+
+    {
+      post.data.youtubeId && (
+        <section class="video-section">
+          <div class="container">
+            <div class="video-card">
+              <div class="video-heading">
+                <div>
+                  <p class="eyebrow">WATCH FIRST</p>
+
+                  <h2>
+                    Prefer watching this breakdown?
+                  </h2>
+
+                  <p>
+                    See the visual explanation before
+                    diving into the details.
+                  </p>
+                </div>
+
+                <span class="video-label">
+                  YOUTUBE
+                </span>
+              </div>
+
+              <div class="video-wrapper">
+                <iframe
+                  src={`https://www.youtube.com/embed/${post.data.youtubeId}`}
+                  title={post.data.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="reading-section">
+      <div class="container reading-grid">
+
+        <aside class="sidebar">
+
           <div class="sidebar-card">
-            <p class="eyebrow">ON THIS PAGE</p>
+            <p class="eyebrow">ARTICLE</p>
 
-            <a href="#article">Article</a>
+            <a href="#article">Read</a>
 
             {
               post.data.youtubeId && (
-                <a href="#watch-video">Video</a>
+                <a href="#video">Video</a>
               )
             }
 
-            <a href="/blog">More articles</a>
+            <a href="/blog">All articles</a>
           </div>
+
+          <div class="sidebar-tip">
+            <span>₹</span>
+            <p>
+              Understand the decision, not just
+              the number.
+            </p>
+          </div>
+
         </aside>
 
-        <div class="article-content" id="article">
-          <Content />
+        <article class="article-content" id="article">
 
-          <div class="disclaimer">
-            <strong>Disclaimer</strong>
+          <div class="article-intro">
+            <span class="intro-line"></span>
 
             <p>
-              This content is for educational and informational purposes
-              only. It should not be considered financial, investment,
-              tax or legal advice. Do your own research and consider
-              your individual circumstances before making financial
-              decisions.
+              This article explains the topic in plain language,
+              then goes deeper into the details that actually matter.
+            </p>
+          </div>
+
+          <Content />
+
+          <div class="key-takeaway">
+            <div class="takeaway-label">
+              KEY TAKEAWAY
+            </div>
+
+            <h3>
+              Good financial decisions come from
+              understanding the trade-offs.
+            </h3>
+
+            <p>
+              Don't focus on one number in isolation.
+              Look at the full picture before making a decision.
+            </p>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Educational content</strong>
+
+            <p>
+              INVESThOuR content is for general educational and
+              informational purposes and is not financial,
+              investment, tax or legal advice.
             </p>
           </div>
 
@@ -126,10 +185,15 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
             post.data.youtubeId && (
               <div class="youtube-cta">
                 <div>
-                  <p class="eyebrow">WATCH ON YOUTUBE</p>
-                  <h2>Continue the conversation on YouTube.</h2>
+                  <p class="eyebrow">CONTINUE WATCHING</p>
+
+                  <h2>
+                    Take the full breakdown to YouTube.
+                  </h2>
+
                   <p>
-                    Watch more practical breakdowns from INVESThOuR.
+                    More practical explanations about money,
+                    investing and financial decisions.
                   </p>
                 </div>
 
@@ -143,185 +207,305 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
               </div>
             )
           }
-        </div>
+
+        </article>
 
       </div>
+    </section>
 
-    </div>
-  </article>
+  </main>
 </Layout>
 
 <style>
   .article-page {
-    padding: 40px 0 100px;
+    color: var(--text);
+  }
+
+  .container {
+    width: min(var(--container), calc(100% - 40px));
+    margin-inline: auto;
+  }
+
+  .article-hero {
+    padding: 42px 0 75px;
+    border-bottom: 1px solid var(--border);
   }
 
   .breadcrumbs {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    gap: 8px;
+    margin-bottom: 55px;
+
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .breadcrumbs a {
-    color: #4b5563;
+    color: var(--text-secondary);
     text-decoration: none;
   }
 
-  .breadcrumbs a:hover {
-    color: var(--text);
-  }
-
-  .article-header {
-    max-width: 900px;
-    margin-bottom: 45px;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 65px;
+    align-items: center;
   }
 
   .category {
-    margin-bottom: 14px;
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    color: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
   h1 {
-    margin: 0;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    line-height: 0.98;
+    max-width: 900px;
+    margin: 14px 0 22px;
+
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(3.3rem, 6vw, 6.3rem);
+    font-weight: 600;
+    line-height: 0.94;
     letter-spacing: -0.055em;
   }
 
   .description {
-    max-width: 780px;
-    margin: 28px 0 0;
+    max-width: 720px;
+    margin: 0;
+
     color: var(--text-secondary);
-    font-size: 1.2rem;
-    line-height: 1.75;
+    font-size: 1.13rem;
+    line-height: 1.8;
   }
 
-  .meta {
+  .meta-line {
     display: flex;
     gap: 10px;
-    margin-top: 24px;
+    margin-top: 25px;
+
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    text-transform: uppercase;
   }
 
-  .featured-image {
-    max-width: 1100px;
-    margin: 0 0 60px;
+  .hero-image {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
   }
 
-  .featured-image img {
+  .hero-image img {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 8;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: 20px;
   }
 
-  .watch-card {
-    max-width: 1100px;
-    margin-bottom: 70px;
-    padding: 32px;
+  .video-section {
+    padding: 52px 0 15px;
+  }
+
+  .video-card {
+    padding: 28px;
     border: 1px solid var(--border);
-    border-radius: 20px;
-    background: var(--surface-soft);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+
+  .video-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 25px;
   }
 
   .eyebrow {
     margin: 0;
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    color: var(--brand);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  .watch-card h2 {
-    margin: 8px 0;
-    font-size: 1.8rem;
-    letter-spacing: -0.03em;
+  .video-heading h2 {
+    margin: 9px 0;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
   }
 
-  .watch-card p:not(.eyebrow) {
-    margin: 0 0 25px;
+  .video-heading p:not(.eyebrow) {
+    margin: 0;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.65;
+  }
+
+  .video-label {
+    flex: 0 0 auto;
+
+    padding: 7px 9px;
+    border-radius: 8px;
+
+    background: #ff0000;
+    color: white;
+
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
   .video-wrapper {
-    aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-radius: 14px;
-    background: #111827;
+    aspect-ratio: 16 / 9;
+    border-radius: 15px;
+    background: #000;
   }
 
-  iframe {
+  .video-wrapper iframe {
     width: 100%;
     height: 100%;
     border: 0;
   }
 
-  .article-layout {
+  .reading-section {
+    padding: 70px 0 110px;
+  }
+
+  .reading-grid {
     display: grid;
-    grid-template-columns: 200px minmax(0, 760px);
-    gap: 60px;
+    grid-template-columns: 190px minmax(0, 770px);
+    justify-content: center;
+    gap: 65px;
     align-items: start;
   }
 
-  .article-sidebar {
+  .sidebar {
     position: sticky;
-    top: 100px;
+    top: 115px;
   }
 
   .sidebar-card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding-left: 18px;
-    border-left: 2px solid #e5e7eb;
+    gap: 13px;
+
+    padding-left: 17px;
+    border-left: 2px solid var(--border);
   }
 
   .sidebar-card a {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.86rem;
+    font-weight: 600;
     text-decoration: none;
   }
 
   .sidebar-card a:hover {
+    color: var(--brand);
+  }
+
+  .sidebar-tip {
+    margin-top: 30px;
+    padding: 18px;
+
+    border-radius: 14px;
+    background: var(--surface-soft);
     color: var(--text);
+  }
+
+  .sidebar-tip span {
+    display: grid;
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+    margin-bottom: 12px;
+
+    border-radius: 50%;
+
+    background: var(--brand);
+    color: #07100d;
+
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  .sidebar-tip p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.83rem;
+    line-height: 1.55;
   }
 
   .article-content {
     min-width: 0;
+    color: var(--text);
     font-size: 1.08rem;
-    line-height: 1.85;
+    line-height: 1.9;
+  }
+
+  .article-intro {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .intro-line {
+    width: 4px;
+    flex: 0 0 4px;
+    border-radius: 999px;
+    background: var(--brand);
+  }
+
+  .article-intro p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    line-height: 1.75;
   }
 
   .article-content :global(h2) {
-    margin: 55px 0 15px;
-    font-size: 2rem;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
+    margin: 62px 0 16px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
   }
 
   .article-content :global(h3) {
-    margin: 35px 0 12px;
-    font-size: 1.4rem;
+    margin: 38px 0 12px;
+    color: var(--text);
+    font-size: 1.45rem;
+    line-height: 1.2;
   }
 
   .article-content :global(p) {
-    margin: 0 0 22px;
+    margin: 0 0 23px;
     color: var(--text-secondary);
   }
 
   .article-content :global(ul),
   .article-content :global(ol) {
-    margin: 0 0 25px;
+    margin: 0 0 26px;
     padding-left: 25px;
     color: var(--text-secondary);
   }
@@ -335,27 +519,75 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
   }
 
   .article-content :global(a) {
-    color: var(--text);
+    color: var(--brand-dark);
+    font-weight: 700;
+  }
+
+  .article-content :global(blockquote) {
+    margin: 35px 0;
+    padding: 25px 27px;
+    border-left: 4px solid var(--brand);
+    border-radius: 0 13px 13px 0;
+    background: var(--surface-soft);
+  }
+
+  .article-content :global(img) {
+    display: block;
+    width: 100%;
+    margin: 30px 0;
+    border-radius: 15px;
+  }
+
+  .key-takeaway {
+    margin: 55px 0;
+    padding: 30px;
+    border: 1px solid var(--brand);
+    border-radius: var(--radius-md);
+    background: var(--brand-soft);
+  }
+
+  .takeaway-label {
+    margin-bottom: 12px;
+    color: var(--brand-dark);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
     font-weight: 600;
+    letter-spacing: 0.07em;
+  }
+
+  .key-takeaway h3 {
+    margin: 0 0 12px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .key-takeaway p {
+    margin: 0;
+    color: var(--text-secondary);
   }
 
   .disclaimer {
-    margin-top: 55px;
-    padding: 22px;
+    margin-top: 50px;
+    padding: 20px 22px;
+
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--surface-soft);
   }
 
   .disclaimer strong {
-    font-size: 0.9rem;
+    color: var(--text);
+    font-size: 0.87rem;
   }
 
   .disclaimer p {
-    margin: 8px 0 0;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.7;
+    margin: 7px 0 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.65;
   }
 
   .youtube-cta {
@@ -363,74 +595,101 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
     align-items: center;
     justify-content: space-between;
     gap: 30px;
-    margin-top: 55px;
+
+    margin-top: 52px;
     padding: 30px;
-    border-radius: 16px;
-    background: #111827;
+
+    border-radius: var(--radius-md);
+    background: #121916;
     color: white;
   }
 
+  html[data-theme="dark"] .youtube-cta {
+    background: #161c19;
+  }
+
   .youtube-cta h2 {
-    margin: 8px 0;
-    font-size: 1.6rem;
+    margin: 8px 0 10px;
+    color: white;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
   }
 
   .youtube-cta p:not(.eyebrow) {
     margin: 0;
-    color: var(--text-muted);
+    color: #b6c0bb;
+    line-height: 1.7;
   }
 
   .youtube-cta a {
-    flex-shrink: 0;
-    padding: 12px 18px;
-    border-radius: 8px;
-    background: var(--surface);
-    color: var(--text);
-    font-weight: 700;
+    flex: 0 0 auto;
+
+    padding: 13px 17px;
+    border-radius: 10px;
+
+    background: white;
+    color: #111;
     text-decoration: none;
+    font-weight: 700;
   }
 
-  @media (max-width: 900px) {
-    .article-layout {
+  @media (max-width: 950px) {
+    .hero-grid {
       grid-template-columns: 1fr;
-      gap: 30px;
     }
 
-    .article-sidebar {
+    .hero-image {
+      max-width: 780px;
+    }
+
+    .reading-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
       display: none;
     }
   }
 
-  @media (max-width: 640px) {
-    .article-page {
-      padding-top: 30px;
+  @media (max-width: 700px) {
+    .article-hero {
+      padding: 30px 0 50px;
     }
 
-    .article-header {
+    .breadcrumbs {
       margin-bottom: 35px;
     }
 
-    .featured-image img {
-      border-radius: 14px;
+    h1 {
+      font-size: clamp(3rem, 14vw, 5rem);
     }
 
-    .watch-card {
+    .video-card {
       padding: 20px;
-      border-radius: 16px;
+    }
+
+    .video-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .reading-section {
+      padding-top: 50px;
+    }
+
+    .article-content {
+      font-size: 1rem;
     }
 
     .youtube-cta {
-      flex-direction: column;
       align-items: flex-start;
+      flex-direction: column;
     }
 
     .youtube-cta a {
       width: 100%;
       text-align: center;
-    }
-
-    .meta {
-      flex-wrap: wrap;
     }
   }
 </style>
