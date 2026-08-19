@@ -21,13 +21,43 @@ import VideoCard from "../components/VideoCard.astro";
 
   <section class="videos-section">
     <div class="container">
-      <div class="filters">
-        <button class="active">All</button>
-        <button>Personal Finance</button>
-        <button>Investing</button>
-        <button>Mutual Funds</button>
-        <button>IPO</button>
-      </div>
+    <div class="filters" aria-label="Filter videos">
+        <button
+            type="button"
+            class="active"
+            data-filter="All"
+        >
+            All
+        </button>
+
+        <button
+            type="button"
+            data-filter="Personal Finance"
+        >
+            Personal Finance
+        </button>
+
+        <button
+            type="button"
+            data-filter="Investing"
+        >
+            Investing
+        </button>
+
+        <button
+            type="button"
+            data-filter="Mutual Funds"
+        >
+            Mutual Funds
+        </button>
+
+        <button
+            type="button"
+            data-filter="IPO"
+        >
+            IPO
+        </button>
+    </div>
 
       <div class="video-grid">
         {videos.map((video) => (
@@ -41,7 +71,7 @@ import VideoCard from "../components/VideoCard.astro";
 <style>
   .page-header {
     padding: 80px 0 60px;
-    background: #f8fafc;
+    background: var(--surface-soft);
     border-bottom: 1px solid #e5e7eb;
   }
 
@@ -56,7 +86,7 @@ import VideoCard from "../components/VideoCard.astro";
   .page-header p:last-child {
     max-width: 650px;
     margin: 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 1.1rem;
     line-height: 1.7;
   }
@@ -66,7 +96,7 @@ import VideoCard from "../components/VideoCard.astro";
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: #6b7280;
+    color: var(--text-secondary);
   }
 
   .videos-section {
@@ -84,16 +114,16 @@ import VideoCard from "../components/VideoCard.astro";
     border: 1px solid #d1d5db;
     border-radius: 999px;
     padding: 9px 16px;
-    background: white;
-    color: #374151;
+    background: var(--surface);
+    color: var(--text-secondary);
     cursor: pointer;
     font: inherit;
   }
 
   .filters button.active {
-    background: #111827;
-    color: white;
-    border-color: #111827;
+    background: var(--brand);
+    color: #07100d;
+    border-color: var(--brand);
   }
 
   .video-grid {
@@ -118,3 +148,41 @@ import VideoCard from "../components/VideoCard.astro";
     }
   }
 </style>
+
+<script>
+  const filterButtons =
+    document.querySelectorAll<HTMLButtonElement>(
+      "[data-filter]"
+    );
+
+  const videoCards =
+    document.querySelectorAll<HTMLElement>(
+      ".video-card"
+    );
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedFilter =
+        button.dataset.filter ?? "All";
+
+      filterButtons.forEach((item) => {
+        item.classList.toggle(
+          "active",
+          item === button
+        );
+      });
+
+      videoCards.forEach((card) => {
+        const category =
+          card.dataset.category ?? "";
+
+        const shouldShow =
+          selectedFilter === "All" ||
+          category === selectedFilter;
+
+        card.style.display =
+          shouldShow ? "" : "none";
+      });
+    });
+  });
+</script>

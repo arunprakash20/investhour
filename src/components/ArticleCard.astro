@@ -27,15 +27,15 @@ const { title, description, date, category, href } = Astro.props;
 <style>
   .article-card {
     padding: 24px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background: white;
+    background: var(--surface);
   }
 
   .category {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--text-secondary);
   }
 
   h3 {
@@ -43,12 +43,12 @@ const { title, description, date, category, href } = Astro.props;
   }
 
   h3 a {
-    color: #111827;
+    color: var(--text);
     text-decoration: none;
   }
 
   p {
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 
@@ -56,13 +56,13 @@ const { title, description, date, category, href } = Astro.props;
     display: block;
     margin-top: 16px;
     font-size: 0.85rem;
-    color: #9ca3af;
+    color: var(--text-muted);
   }
 
   .read-more {
     display: inline-block;
     margin-top: 18px;
-    color: #111827;
+    color: var(--text);
     font-weight: 600;
     text-decoration: none;
   }

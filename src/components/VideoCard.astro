@@ -18,7 +18,7 @@ const {
 const href = `/videos/${slug}`;
 ---
 
-<article class="video-card">
+<article class="video-card" data-category={category}>
   <a href={href} class="thumbnail" aria-label={`Watch ${title}`}>
     <img src={thumbnail} alt={title} loading="lazy" />
 
@@ -39,9 +39,10 @@ const href = `/videos/${slug}`;
 <style>
   .video-card {
     overflow: hidden;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background: white;
+    background: var(--surface);
+    transition: opacity 180ms ease, transform 180ms ease;
   }
 
   .thumbnail {
@@ -69,8 +70,8 @@ const href = `/videos/${slug}`;
     width: 54px;
     height: 54px;
     border-radius: 50%;
-    background: white;
-    color: #111827;
+    background: var(--surface);
+    color: var(--text);
     font-size: 18px;
   }
 
@@ -80,7 +81,7 @@ const href = `/videos/${slug}`;
 
   .category {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--text-secondary);
   }
 
   h3 {
@@ -88,7 +89,7 @@ const href = `/videos/${slug}`;
   }
 
   h3 a {
-    color: #111827;
+    color: var(--text);
     text-decoration: none;
   }
 
@@ -97,7 +98,7 @@ const href = `/videos/${slug}`;
   }
 
   p {
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.6;
   }
 </style>

@@ -2,27 +2,52 @@
 ---
 
 <header class="site-header">
-  <div class="container header-inner">
-    <a href="/" class="logo" aria-label="INVESThOuR home">
-      INVEST<span>hOuR</span>
+  <div class="header-container">
+    <a
+      href="/"
+      class="brand"
+      aria-label="INVESThOuR home"
+    >
+      <img
+        src="/images/investhour-logo.png"
+        alt="INVESThOuR"
+      />
     </a>
 
     <nav class="desktop-nav" aria-label="Main navigation">
-      <a href="/">Home</a>
-      <a href="/videos">Videos</a>
-      <a href="/blog">Blog</a>
-      <a href="/about">About</a>
+        <a href="/">Home</a>
+        <a href="/videos">Videos</a>
+        <a href="/blog">Articles</a>
+        <a href="/tools">Tools</a>
+        <a href="/about">About</a>
     </nav>
 
     <div class="header-actions">
       <a
-        href="https://www.youtube.com/"
+        href="https://www.youtube.com/@INVESThOuR"
         target="_blank"
         rel="noopener noreferrer"
-        class="youtube-button"
+        class="youtube-link"
+        aria-label="INVESThOuR on YouTube"
       >
-        YouTube
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            fill="currentColor"
+            d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.7 3.9-6.7 3.9Z"
+          />
+        </svg>
       </a>
+
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Toggle dark mode"
+      >
+        <span class="theme-icon">◐</span>
+      </button>
 
       <button
         class="menu-button"
@@ -39,15 +64,16 @@
   </div>
 
   <div class="mobile-menu" id="mobile-menu">
-    <nav aria-label="Mobile navigation">
-      <a href="/">Home</a>
-      <a href="/videos">Videos</a>
-      <a href="/blog">Blog</a>
-      <a href="/about">About</a>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/videos">Videos</a>
+        <a href="/blog">Articles</a>
+        <a href="/tools">Tools</a>
+        <a href="/about">About</a>
     </nav>
 
     <a
-      href="https://www.youtube.com/"
+      href="https://www.youtube.com/@INVESThOuR"
       target="_blank"
       rel="noopener noreferrer"
       class="mobile-youtube"
@@ -58,24 +84,104 @@
 </header>
 
 <script>
-  const menuButton = document.querySelector(".menu-button");
-  const mobileMenu = document.querySelector(".mobile-menu");
+  const STORAGE_KEY = "investhour-theme";
 
-  menuButton?.addEventListener("click", () => {
-    const isOpen = mobileMenu?.classList.toggle("open");
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(STORAGE_KEY, theme);
+  }
 
-    menuButton.setAttribute("aria-expanded", String(isOpen));
+  function getTheme() {
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-    menuButton.classList.toggle("active", Boolean(isOpen));
-  });
+    if (saved === "light" || saved === "dark") {
+      return saved;
+    }
 
-  document.querySelectorAll(".mobile-menu a").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu?.classList.remove("open");
-      menuButton?.classList.remove("active");
-      menuButton?.setAttribute("aria-expanded", "false");
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  function initialiseTheme() {
+    applyTheme(getTheme());
+
+    const themeToggle =
+      document.querySelector(".theme-toggle");
+
+    if (!themeToggle || themeToggle.dataset.bound === "true") {
+      return;
+    }
+
+    themeToggle.dataset.bound = "true";
+
+    themeToggle.addEventListener("click", () => {
+      const current =
+        document.documentElement.dataset.theme === "dark"
+          ? "dark"
+          : "light";
+
+      applyTheme(current === "dark" ? "light" : "dark");
     });
-  });
+  }
+
+  function initialiseMenu() {
+    const menuButton =
+      document.querySelector(".menu-button");
+
+    const mobileMenu =
+      document.querySelector(".mobile-menu");
+
+    if (
+      !menuButton ||
+      !mobileMenu ||
+      menuButton.dataset.bound === "true"
+    ) {
+      return;
+    }
+
+    menuButton.dataset.bound = "true";
+
+    menuButton.addEventListener("click", () => {
+      const open =
+        mobileMenu.classList.toggle("open");
+
+      menuButton.setAttribute(
+        "aria-expanded",
+        String(open)
+      );
+
+      menuButton.classList.toggle(
+        "active",
+        open
+      );
+    });
+
+    mobileMenu
+      .querySelectorAll("a")
+      .forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("open");
+          menuButton.classList.remove("active");
+          menuButton.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+        });
+      });
+  }
+
+  function initialiseHeader() {
+    initialiseTheme();
+    initialiseMenu();
+  }
+
+  document.addEventListener(
+    "astro:page-load",
+    initialiseHeader
+  );
+
+  initialiseHeader();
 </script>
 
 <style>
@@ -83,98 +189,142 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 1px solid #e5e7eb;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    background: color-mix(
+      in srgb,
+      var(--bg) 90%,
+      transparent
+    );
+    backdrop-filter: blur(18px);
   }
 
-  .header-inner {
+  .header-container {
+    width: min(var(--container), calc(100% - 40px));
+    min-height: 82px;
+    margin-inline: auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 72px;
     gap: 30px;
   }
 
-  .logo {
-    color: #111827;
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    text-decoration: none;
-    white-space: nowrap;
-  }
+    .brand {
+        display: flex;
+        align-items: center;
+        width: 160px;
+    }
 
-  .logo span {
-    font-weight: 500;
-  }
+    .brand img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    html[data-theme="dark"] .brand img {
+        filter: invert(1) hue-rotate(180deg);
+    }
 
   .desktop-nav {
     display: flex;
     align-items: center;
-    gap: 30px;
-    margin-left: auto;
+    gap: 32px;
   }
 
   .desktop-nav a {
-    color: #4b5563;
-    font-size: 0.95rem;
+    position: relative;
+    color: var(--text-secondary);
     text-decoration: none;
-    transition: color 0.2s ease;
+    font-size: 0.94rem;
+    font-weight: 600;
+  }
+
+  .desktop-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--brand);
+    transition: width 180ms ease;
   }
 
   .desktop-nav a:hover {
-    color: #111827;
+    color: var(--text);
+  }
+
+  .desktop-nav a:hover::after {
+    width: 100%;
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
-  .youtube-button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: #111827;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 600;
+  .youtube-link,
+  .theme-toggle,
+  .menu-button {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .youtube-link {
+    color: #ff0000;
     text-decoration: none;
     transition:
-      transform 0.2s ease,
-      background 0.2s ease;
+      width 180ms ease,
+      background 180ms ease,
+      color 180ms ease;
   }
 
-  .youtube-button:hover {
-    background: #000;
-    transform: translateY(-1px);
+  .youtube-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .youtube-link:hover {
+    width: 92px;
+    color: white;
+    background: #ff0000;
+  }
+
+  .theme-toggle {
+    cursor: pointer;
+    font-size: 1.05rem;
+  }
+
+  .theme-toggle:hover {
+    background: var(--surface-soft);
   }
 
   .menu-button {
     display: none;
-    width: 42px;
-    height: 42px;
-    padding: 9px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: white;
     cursor: pointer;
   }
 
   .menu-button span {
-    display: block;
-    width: 100%;
+    width: 18px;
     height: 2px;
-    margin: 5px 0;
-    background: #111827;
+    margin: 2px 0;
+    border-radius: 999px;
+    background: currentColor;
     transition:
-      transform 0.2s ease,
-      opacity 0.2s ease;
+      transform 180ms ease,
+      opacity 180ms ease;
   }
 
   .menu-button.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
   }
 
   .menu-button.active span:nth-child(2) {
@@ -182,13 +332,14 @@
   }
 
   .menu-button.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
   }
 
   .mobile-menu {
     display: none;
-    border-top: 1px solid #e5e7eb;
-    background: white;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
   }
 
   .mobile-menu nav {
@@ -197,22 +348,21 @@
   }
 
   .mobile-menu nav a {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f3f4f6;
-    color: #111827;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--border);
     font-weight: 600;
     text-decoration: none;
   }
 
   .mobile-youtube {
     display: block;
-    margin: 16px 20px 20px;
-    padding: 13px 16px;
-    border-radius: 8px;
-    background: #111827;
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #ff0000;
     color: white;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
   }
 
@@ -220,14 +370,17 @@
     display: block;
   }
 
-  @media (max-width: 768px) {
-    .desktop-nav,
-    .youtube-button {
+  @media (max-width: 800px) {
+    .desktop-nav {
       display: none;
     }
 
     .menu-button {
-      display: block;
+      display: grid;
+    }
+
+    .brand {
+      width: 140px;
     }
   }
 </style>

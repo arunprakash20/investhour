@@ -161,7 +161,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
     gap: 8px;
     flex-wrap: wrap;
     margin-bottom: 50px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-size: 0.85rem;
   }
 
@@ -171,7 +171,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
   }
 
   .breadcrumbs a:hover {
-    color: #111827;
+    color: var(--text);
   }
 
   .article-header {
@@ -181,7 +181,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
 
   .category {
     margin-bottom: 14px;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -198,7 +198,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
   .description {
     max-width: 780px;
     margin: 28px 0 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 1.2rem;
     line-height: 1.75;
   }
@@ -207,7 +207,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
     display: flex;
     gap: 10px;
     margin-top: 24px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-size: 0.9rem;
   }
 
@@ -228,14 +228,14 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
     max-width: 1100px;
     margin-bottom: 70px;
     padding: 32px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
     border-radius: 20px;
-    background: #f8fafc;
+    background: var(--surface-soft);
   }
 
   .eyebrow {
     margin: 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -249,7 +249,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
 
   .watch-card p:not(.eyebrow) {
     margin: 0 0 25px;
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.7;
   }
 
@@ -287,13 +287,13 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
   }
 
   .sidebar-card a {
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     text-decoration: none;
   }
 
   .sidebar-card a:hover {
-    color: #111827;
+    color: var(--text);
   }
 
   .article-content {
@@ -316,14 +316,14 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
 
   .article-content :global(p) {
     margin: 0 0 22px;
-    color: #374151;
+    color: var(--text-secondary);
   }
 
   .article-content :global(ul),
   .article-content :global(ol) {
     margin: 0 0 25px;
     padding-left: 25px;
-    color: #374151;
+    color: var(--text-secondary);
   }
 
   .article-content :global(li) {
@@ -331,20 +331,20 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
   }
 
   .article-content :global(strong) {
-    color: #111827;
+    color: var(--text);
   }
 
   .article-content :global(a) {
-    color: #111827;
+    color: var(--text);
     font-weight: 600;
   }
 
   .disclaimer {
     margin-top: 55px;
     padding: 22px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
     border-radius: 12px;
-    background: #f8fafc;
+    background: var(--surface-soft);
   }
 
   .disclaimer strong {
@@ -353,7 +353,7 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
 
   .disclaimer p {
     margin: 8px 0 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     line-height: 1.7;
   }
@@ -377,15 +377,15 @@ const publishedDate = post.data.date.toLocaleDateString("en-IN", {
 
   .youtube-cta p:not(.eyebrow) {
     margin: 0;
-    color: #9ca3af;
+    color: var(--text-muted);
   }
 
   .youtube-cta a {
     flex-shrink: 0;
     padding: 12px 18px;
     border-radius: 8px;
-    background: white;
-    color: #111827;
+    background: var(--surface);
+    color: var(--text);
     font-weight: 700;
     text-decoration: none;
   }

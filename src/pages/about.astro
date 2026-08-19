@@ -117,7 +117,7 @@ import Layout from "../layouts/Layout.astro";
 <style>
   .about-hero {
     padding: 100px 0;
-    background: #f8fafc;
+    background: var(--surface-soft);
     border-bottom: 1px solid #e5e7eb;
   }
 
@@ -130,20 +130,20 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .about-hero h1 span {
-    color: #6b7280;
+    color: var(--text-secondary);
   }
 
   .hero-description {
     max-width: 720px;
     margin: 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 1.2rem;
     line-height: 1.8;
   }
 
   .eyebrow {
     margin: 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -154,7 +154,7 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .muted {
-    background: #f8fafc;
+    background: var(--surface-soft);
   }
 
   .narrow {
@@ -183,14 +183,14 @@ import Layout from "../layouts/Layout.astro";
 
   .card {
     padding: 30px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
     border-radius: 16px;
-    background: white;
+    background: var(--surface);
   }
 
   .icon {
     margin-bottom: 20px;
-    color: #9ca3af;
+    color: var(--text-muted);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -203,7 +203,7 @@ import Layout from "../layouts/Layout.astro";
 
   .card p {
     margin: 0;
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.7;
   }
 
@@ -217,8 +217,8 @@ import Layout from "../layouts/Layout.astro";
     padding: 10px 16px;
     border: 1px solid #d1d5db;
     border-radius: 999px;
-    color: #374151;
-    background: white;
+    color: var(--text-secondary);
+    background: var(--surface);
   }
 
   .cta-section {
@@ -229,9 +229,9 @@ import Layout from "../layouts/Layout.astro";
     max-width: 800px;
     margin: 0 auto;
     padding: 60px 40px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border);
     border-radius: 20px;
-    background: #f8fafc;
+    background: var(--surface-soft);
     text-align: center;
   }
 
@@ -245,7 +245,7 @@ import Layout from "../layouts/Layout.astro";
   .cta p:not(.eyebrow) {
     max-width: 600px;
     margin: 0 auto;
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.7;
   }
 
@@ -271,8 +271,8 @@ import Layout from "../layouts/Layout.astro";
 
   .secondary-button {
     border: 1px solid #d1d5db;
-    background: white;
-    color: #111827;
+    background: var(--surface);
+    color: var(--text);
   }
 
   @media (max-width: 768px) {
